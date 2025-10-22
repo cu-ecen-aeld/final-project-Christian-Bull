@@ -1,0 +1,5 @@
+
+config BR2_PACKAGE_SOIL_MOISTURE_DRIVER
+	bool "soil-moisture-driver"
+	help
+	  Custom driver to support soil moisture sensors
