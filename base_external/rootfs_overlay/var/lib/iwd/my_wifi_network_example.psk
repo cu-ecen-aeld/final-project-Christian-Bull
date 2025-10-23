@@ -1,0 +1,8 @@
+# this is an example
+# the name of this file should be your SSID
+
+[Security]
+Passphrase=<MyWifiPassword>
+
+[Settings]
+AutoConnect=true
