@@ -1,0 +1,9 @@
+start_file=start4.elf
+fixup_file=fixup4.dat
+kernel=zImage
+device_tree=bcm2711-rpi-4-b.dtb
+dtoverlay=rpi-wifi-enable
+enable_uart=1
+disable_overscan=1
+gpu_mem_1024=100
+dtoverlay=miniuart-bt

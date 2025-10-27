@@ -1,0 +1,29 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2711";
+
+    fragment@0 {
+        target = <&mmcnr>;
+        __overlay__ {
+            non-removable;
+            cap-sdio-irq;
+            keep-power-in-suspend;
+            status = "okay";
+
+            brcmf: wifi@1 {
+                reg = <1>;
+                compatible = "brcm,bcm43455-fmac";
+                firmware = "brcm/brcmfmac43455-sdio.bin";
+                nvram = "brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.txt";
+
+                brcm,drive-strength = <12>;
+                interrupt-names = "host-wake";
+                interrupt-parent = <&gpio>;
+                interrupts = <45 0x2>;   /* GPIO45 = WL_HOST_WAKE */
+                reset-gpios = <&gpio 43 1>; /* GPIO43 = WL_REG_ON (active low) */
+            };
+        };
+    };
+};

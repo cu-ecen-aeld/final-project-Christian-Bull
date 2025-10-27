@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Christian Bull <cbull.projects@gmail.com>
+Date: Mon, 27 Oct 2025 11:00:00 -0600
+Subject: [PATCH] bcm2711-rpi-4-b: enable onboard Wi-Fi (BCM43455 over SDIO)
+
+The upstream bcm2711-rpi-4-b.dts enables the SDIO controller but does not
+instantiate the built-in Broadcom BCM43455 Wi-Fi device.  This patch adds
+the missing `wifi@1` node so the brcmfmac driver probes automatically.
+
+Signed-off-by: Christian Bull <cbull.projects@gmail.com>
+---
+ arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts | 28 ++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts b/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
+index 1111111..2222222 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
++++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi-4-b.dts
+@@ -10,7 +10,33 @@
+ &mmcnr {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdio_pins>;
+ 	bus-width = <4>;
+-	status = "okay";
++	non-removable;
++	cap-sdio-irq;
++	keep-power-in-suspend;
++	status = "okay";
++
++	/* Onboard Broadcom BCM43455 Wi-Fi over SDIO */
++	brcmf: wifi@1 {
++		reg = <1>;
++		compatible = "brcm,bcm43455-fmac";
++		firmware = "brcm/brcmfmac43455-sdio.bin";
++		nvram = "brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.txt";
++
++		brcm,drive-strength = <12>;
++		interrupt-names = "host-wake";
++		interrupt-parent = <&gpio>;
++		interrupts = <45 0x2>;	/* GPIO45 = WL_HOST_WAKE, active high */
++		reset-gpios = <&gpio 43 1>; /* GPIO43 = WL_REG_ON, active low */
++	};
+ };
+ 
+ &uart0 {
+ 	pinctrl-0 = <&uart0_pins &bt_pins>;
+ 	status = "okay";
+ };
+-- 
+2.45.0
