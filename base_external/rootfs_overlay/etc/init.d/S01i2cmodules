@@ -1,0 +1,6 @@
+#!/bin/sh
+# Load I2C kernel modules early at boot
+
+echo "[S01i2cmodules] Loading I2C modules..."
+modprobe i2c-bcm2835
+modprobe i2c-dev
