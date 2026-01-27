@@ -16,6 +16,7 @@ dtparam=i2c_arm_baudrate=100000
 dtparam=spi=on
 enable_uart=1
 dtoverlay=i2c1,pins_2_3
+dtoverlay=ads1115-soil
 EOF
   echo "[post-build] Appended custom lines to ${CONFIG_FILE}"
 else
