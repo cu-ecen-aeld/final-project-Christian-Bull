@@ -1,1 +1,3 @@
-pi -1 pi -1 =raspberry /home/pi /bin/sh -
+- -1 i2c -1 - - - - I2C group
+
+pi -1 pi -1 =raspberry /home/pi /bin/sh i2c
