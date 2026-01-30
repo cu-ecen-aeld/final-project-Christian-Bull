@@ -1,0 +1,5 @@
+
+config BR2_PACKAGE_SOIL_MOISTURE_SENSOR
+	bool "soil-moisture-sensor"
+	help
+	  Custom package to hold the sensor-scraper and associated webserver
